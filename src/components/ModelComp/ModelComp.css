@@ -94,4 +94,8 @@
         margin-bottom: 15px;
         text-align: center;
     }
+
+    .model-comp .info .btn {
+        justify-content: center;
+    }
 }
