@@ -1,0 +1,33 @@
+.nav-bar {
+    background-color: black;
+    color: #FFF;
+    padding: 10px 0;
+    height: 75px;
+}
+
+.nav-bar .main-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-bar .main-container .logo img {
+    width: 50px;
+}
+
+.nav-bar .main-container .btn {
+    flex: 1;
+}
+
+.nav-bar .main-container .btn button {
+    display: block;
+    margin-left: auto;
+    border: none;
+    outline: none;
+    background-color: rgb(84, 84, 248);
+    color: #FFF;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+}

@@ -1,0 +1,56 @@
+.add-edit-user .main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 140px);
+    padding-block: 25px;
+}
+
+.add-edit-user .form h2 {
+    text-align: center;
+    color: rgb(55, 55, 55);
+    margin-bottom: 25px;
+}
+
+.add-edit-user .form {
+    width: 100%;
+}
+
+.add-edit-user .form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.add-edit-user .form form input,
+.add-edit-user .form form textarea {
+    border: 1px solid #EEE;
+    outline: none;
+    padding: 12px 15px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.add-edit-user .form form textarea {
+    height: 100px;
+}
+
+.add-edit-user .form .image-user {
+    width: 100px;
+}
+
+.add-edit-user .form form button {
+    display: block;
+    border: none;
+    outline: none;
+    background-color: rgb(84, 84, 248);
+    color: #FFF;
+    padding: 12px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-top: 25px;
+}
