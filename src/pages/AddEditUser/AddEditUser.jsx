@@ -5,6 +5,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage
 import { db, storage } from "../../firebase/config.js"
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 import { useNavigate, useParams } from "react-router-dom"
+import NoImage from "/public/images/no-image.png"
 
 const initioalState = {
     name: "",
@@ -38,70 +39,80 @@ const AddEditUser = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
+    const handleDelImage = async () => {
+        setFile(null)
+        if (data.photo) {
+            const imageRef = ref(storage, data.photo);
+            await deleteObject(imageRef);
+        }
+        setData({ ...data, photo: "" })
+    }
+
     const validate = () => {
-        let errors = {};
+        let errorsST = {};
         if (!data.name) {
-            errors.name = "Name Is Required"
+            errorsST.name = "Name Is Required"
         }
         if (!data.email) {
-            errors.email = "Email Is Required"
+            errorsST.email = "Email Is Required"
         }
         if (!data.info) {
-            errors.info = "Info Is Required"
+            errorsST.info = "Info Is Required"
         }
         if (!data.contact) {
-            errors.contact = "Contact Is Required"
+            errorsST.contact = "Contact Is Required"
         }
 
-        return errors;
+        return errorsST;
     }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmit(true)
-        let errors = validate()
-        if (Object.keys(errors).length) {
-            setErrors(errors)
+
+        if (Object.keys(validate()).length) {
+            setErrors(validate())
             setIsSubmit(false)
-        }
-
-        let photoURL = "";
-
-        if (file) {
-            const storageRef = ref(storage, `Images/${file.name}`);
-            await uploadBytes(storageRef, file);
-            photoURL = await getDownloadURL(storageRef);
-        }
-
-        if (!id) {
-            try {
-                await setDoc(doc(db, "users", `user-num-${Math.random().toFixed(3)}`), {
-                    ...data,
-                    photo: photoURL,
-                    createdAt: new Date()
-                });
-            } catch {
-                console.log("Errorrrrrrrrrrrr")
-            }
         } else {
-            try {
-                if (data.photo && photoURL !== "") {
-                    const imageRef = ref(storage, data.photo);
-                    await deleteObject(imageRef);
-                }
 
-                await updateDoc(doc(db, "users", id), {
-                    ...data,
-                    photo: photoURL || data.photo,
-                });
+            let photoURL = "";
 
-            } catch {
-                console.log("Errorrrrrrrrrrrr")
+            if (file) {
+                const storageRef = ref(storage, `Images/${file.name}`);
+                await uploadBytes(storageRef, file);
+                photoURL = await getDownloadURL(storageRef);
             }
-        }
 
-        navigate("/")
+            if (!id) {
+                try {
+                    await setDoc(doc(db, "users", `user-num-${Math.random().toFixed(3)}`), {
+                        ...data,
+                        photo: photoURL,
+                        createdAt: new Date()
+                    });
+                } catch {
+                    console.log("Errorrrrrrrrrrrr")
+                }
+            } else {
+                try {
+                    if (data.photo && photoURL !== "") {
+                        const imageRef = ref(storage, data.photo);
+                        await deleteObject(imageRef);
+                    }
+
+                    await updateDoc(doc(db, "users", id), {
+                        ...data,
+                        photo: photoURL || data.photo,
+                    });
+
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            navigate("/")
+        }
     }
 
     return (
@@ -165,10 +176,24 @@ const AddEditUser = () => {
                             </p>
 
                             <label>{id ? "Change Image" : "Upload Image"}</label>
-                            <input
-                                type="file"
-                                onChange={(e) => setFile(e.target.files[0])}
-                            />
+
+                            <div className="upload-image">
+                                {id &&
+                                    <div>
+                                        <span className="cancel" onClick={handleDelImage}>X</span>
+                                        <img
+                                            src={file ? URL.createObjectURL(file) : data.photo || NoImage}
+                                            alt={data.name}
+                                            className="image-user"
+                                        />
+                                    </div>
+                                }
+
+                                <input
+                                    type="file"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                />
+                            </div>
 
                             <button>{id ? "Update" : "Submit"}</button>
                         </form>

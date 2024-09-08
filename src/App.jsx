@@ -13,7 +13,7 @@ function App() {
                 <Route path='/update/:id' element={<AddEditUser />} />
             </Routes>
             <div className='footer'>
-                <p>Copyright © 2024 All rights reserved Coding By &#128151; Beshoy Hamam</p>
+                <p>Copyright © 2024 | Developed By &#128151; Beshoy Hamam</p>
             </div>
         </div>
     )

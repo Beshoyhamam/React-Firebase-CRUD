@@ -1,15 +1,16 @@
 /* eslint-disable react/prop-types */
 import "./ModelComp.css"
+import NoImage from "/public/images/no-image.png"
 
 const ModelComp = ({ userData, handleDelete, closeInfo }) => {
     return (
         <div className="model-comp">
             <div className="info">
-                <h2>Uset details</h2>
+                <h2>User Details</h2>
 
                 <div className="info-content">
                     <div className="img-user">
-                        <img src={userData.data().photo} alt={userData.name} />
+                        <img src={userData.data().photo || NoImage} alt={userData.data().name} />
                     </div>
 
                     <div className="content">

@@ -6,6 +6,7 @@ import Loading from "../../components/Loading/Loading.jsx"
 import { useNavigate } from "react-router-dom";
 import ModelComp from "../../components/ModelComp/ModelComp.jsx";
 import { deleteObject, ref } from "firebase/storage";
+import NoImage from "/public/images/no-image.png"
 
 const Home = () => {
     const [usersData, setUsersData] = useState([])
@@ -89,7 +90,7 @@ const Home = () => {
                 <div className="all-users">
                     {usersData.map((el) => (
                         <div key={el.id} className="cart-user">
-                            <img src={el.data().photo} alt={el.data().name} />
+                            <img src={el.data().photo || NoImage} alt={el.data().name} />
                             <p>{`Name: ${el.data().name}`}</p>
                             <p>{`Email: ${el.data().email}`}</p>
 
