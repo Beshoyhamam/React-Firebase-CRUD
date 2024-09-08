@@ -27,7 +27,9 @@ const Home = () => {
 
         const fetchData = () => {
             const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
-                const sortedData = snapshot.docs.reverse()
+                const sortedData = snapshot.docs.sort((a, b) => {
+                    return b.data().createdAt - a.data().createdAt;
+                });
                 setUsersData(sortedData);
                 setLoading(false);
             },
